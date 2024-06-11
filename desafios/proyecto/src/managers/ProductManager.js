@@ -100,7 +100,7 @@ const test = async () => {
     'Product 1',
     'Description 1',
     100,
-    './images/product1.jpg',
+    'sin imagen',
     '123456',
     10
   );
@@ -108,7 +108,7 @@ const test = async () => {
     'Product 2',
     'Description 2',
     200,
-    './images/product2.jpg',
+    'sin imagen',
     '679012',
     20
   );
@@ -116,7 +116,7 @@ const test = async () => {
     'Product 3',
     'Description 3',
     300,
-    './images/product3.jpg',
+    'sin imagen',
     '234567',
     30
   );
