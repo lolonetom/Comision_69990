@@ -7,9 +7,9 @@
     "dev": "nodemon src/app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Edoardo Maciel Roldan",
   "license": "ISC",
-  "description": "",
+  "description": "Proyecto Final Comision 69990",
   "dependencies": {
     "express": "^4.19.2"
   }
