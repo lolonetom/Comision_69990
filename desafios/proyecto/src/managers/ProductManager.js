@@ -1,5 +1,5 @@
 //IMPORTAMOS EL MODULO FILE SYSTEM
-import fs from 'fs';
+import { promises as fs } from 'fs';
 
 //CREAMOS LA CLASE
 class ProductManager {
@@ -11,18 +11,18 @@ class ProductManager {
   }
 
   //METODO AGREGAR PRODUCTOS
-  async addProduct(title, description, price, thumbnail, code, stock) {
+  async addProduct({ title, description, price, thumbnail, code, stock }) {
     try {
-      await this.getProducts();
+      const arrayProducts = await this.getProducts();
       if (!title || !description || !price || !thumbnail || !code || !stock) {
         console.log('Todos los campos son obligatorios');
         return;
       }
-      if (this.products.some((item) => item.code === code)) {
+      if (arrayProducts.some((item) => item.code === code)) {
         console.log('El codigo ya existe');
         return;
       }
-      const product = {
+      const newProduct = {
         id: ++ProductManager.utlId,
         title,
         description,
@@ -31,22 +31,20 @@ class ProductManager {
         code,
         stock,
       };
-      this.products.push(product);
-      await fs.promises.writeFile(this.path, JSON.stringify(this.products));
-    } catch (error) {}
+      arrayProducts.push(newProduct);
+    } catch (err) {
+      console.log('Error al agregar producto', err);
+    }
   }
   //METODO OBTENER PRODUCTOS
   async getProducts() {
     try {
-      if (fs.promises.writeFile(this.path)) {
-        const productJSON = await fs.promises.readFile(this.path, 'utf-8');
-        this.products.push(...JSON.parse(productJSON));
-        return this.products;
-      } else {
-        return this.products;
-      }
+      const productJSON = await fs.readFile(this.path, 'utf-8');
+      const arrayProducts = JSON.parse(productJSON);
+      return arrayProducts;
     } catch (err) {
       console.log(err);
+      throw err;
     }
   }
   //METODO BUSCAR POR ID PRODUCTOS
@@ -71,7 +69,7 @@ class ProductManager {
         product.thumbnail = thumbnail;
         product.code = code;
         product.stock = stock;
-        await fs.promises.writeFile(this.path, JSON.stringify(this.products));
+        await fs.writeFile(this.path, JSON.stringify(this.products));
       }
     } catch (err) {
       console.log(err);
@@ -84,7 +82,7 @@ class ProductManager {
       const product = this.products.find((item) => item.id === id);
       if (product) {
         this.products = this.products.filter((item) => item.id !== id);
-        await fs.promises.writeFile(this.path, JSON.stringify(this.products));
+        await fs.writeFile(this.path, JSON.stringify(this.products));
       }
     } catch (err) {
       console.log(err);
@@ -92,8 +90,10 @@ class ProductManager {
   }
 }
 
+export default ProductManager;
+
 //TESTING
-const productManager = new ProductManager('./productsFile.json');
+/* const productManager = new ProductManager('./productsFile.json');
 
 const test = async () => {
   await productManager.addProduct(
@@ -127,4 +127,4 @@ const test = async () => {
   await productManager.deleteProduct(1);
 };
 
-test();
+test(); */
