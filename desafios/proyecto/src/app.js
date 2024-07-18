@@ -7,7 +7,7 @@ import cartsRouter from './routes/carts.routes.js';
 import viewsRouter from './routes/view.routes.js';
 ////////////////////////////////
 const app = express();
-const PORT = 8080;
+const PORT = 8081;
 
 //PARA USO DE DATOS EN JSON
 app.use(express.json());
@@ -20,9 +20,9 @@ app.set('view engine', 'handlebars');
 app.set('views', './src/views');
 
 //RUTAS
-app.use('api/products', productsRouter);
-app.use('api/carts', cartsRouter);
-app.use('api/views', viewsRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/carts', cartsRouter);
+app.use('/', viewsRouter);
 
 //ESCUCHANDO PUERTOS
 app.listen(PORT, () =>
