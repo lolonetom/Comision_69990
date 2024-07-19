@@ -286,6 +286,9 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 
+# Otras carpetas personales
+desafios/proyecto_
+
 # Visual Studio 6 build log
 *.plg
 
